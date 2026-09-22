@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Mail\WelcomeUserMail;
+use App\Jobs\SendWelcomeEmailJob;
  
 class RegisterController extends Controller
 {
@@ -17,6 +18,7 @@ class RegisterController extends Controller
  
     public function store(Request $request)
     {
+        
         // 1. Validaciones extra completas
         $validated = $request->validate([
             'name'     => ['required', 'string', 'min:3', 'max:255'],
@@ -35,7 +37,7 @@ class RegisterController extends Controller
         ]);
  
         // 3. Enviar correo de bienvenida mediante Brevo SMTP
-        Mail::to($user->email)->send(new WelcomeUserMail($validated));
+       SendWelcomeEmailJob::dispatch($user);
  
         // 4. Retornar respuesta exitosa
         return back()->with('success', '¡Usuario registrado con éxito! Correo de bienvenida enviado.

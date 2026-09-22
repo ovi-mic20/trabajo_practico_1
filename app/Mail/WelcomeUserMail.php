@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue; // 1. Importar la interfaz oficial
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
  
-class WelcomeUserMail extends Mailable implements ShouldQueue // 2. Implementar ShouldQueue
+class WelcomeUserMail extends Mailable // 2. Implementar ShouldQueue
 {
     use Queueable, SerializesModels;
  
